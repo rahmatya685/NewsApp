@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface StoryRepo {
     fun getNewStories(): Flow<List<StoryModel>>
+    fun getBookmarkedStories(): Flow<List<StoryModel>>
 }

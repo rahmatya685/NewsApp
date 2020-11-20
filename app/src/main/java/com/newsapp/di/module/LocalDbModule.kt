@@ -1,12 +1,10 @@
 package com.newsapp.di.module
 
 import android.content.Context
-import androidx.room.Database
 import androidx.room.Room
-import com.newsapp.business.processor.TopStoriesActionProcessor
 import com.newsapp.di.FeatureScope
-import com.newsapp.repository.local.DB_NAME
-import com.newsapp.repository.local.LocalDb
+import com.newsapp.repository.local.base.DB_NAME
+import com.newsapp.repository.local.base.LocalDb
 import com.newsapp.repository.local.topstories.BookmarkedEntityDao
 import com.newsapp.repository.local.topstories.BookmarkedStoriesRepo
 import com.newsapp.repository.local.topstories.BookmarkedStoriesRepoImpl
@@ -23,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 interface LocalDbModule {
 
-    @get:[Binds FeatureScope]
+    @get:[Binds Singleton]
     val BookmarkedStoriesRepoImpl.bookmarkedRepo:BookmarkedStoriesRepo
 
     companion object {

@@ -1,4 +1,4 @@
-package com.newsapp.repository.local
+package com.newsapp.repository.local.base
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

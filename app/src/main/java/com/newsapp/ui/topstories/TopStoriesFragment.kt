@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.newsapp.R
 import com.newsapp.business.state.TopStoriesViewState
-import com.newsapp.databinding.FragmentPagerBinding
 import com.newsapp.databinding.FragmentTopStoriesBinding
 import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
@@ -55,9 +53,10 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTopnews.adapter= storiesAdaptor
-        binding.rvTopnews.layoutManager =LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
-        viewModel.viewState.observe(viewLifecycleOwner, ::observe)
+        binding.rvTopnews.adapter = storiesAdaptor
+        binding.rvTopnews.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
     }
 
     companion object {
@@ -67,7 +66,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
 
-    override fun observe(state: TopStoriesViewState) {
+    override fun observeData(state: TopStoriesViewState): Unit {
         when {
             state.isLoading -> renderLoading()
             state.hasError -> {

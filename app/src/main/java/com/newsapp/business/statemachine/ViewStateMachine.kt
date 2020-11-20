@@ -1,9 +1,10 @@
-package com.newsapp.business.state
+package com.newsapp.business.statemachine
 
 import com.newsapp.business.actions.ViewAction
 import com.newsapp.business.mixer.ResultStateMixer
 import com.newsapp.business.processor.ActionProcessor
 import com.newsapp.business.results.ViewResult
+import com.newsapp.business.state.ViewState
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 

@@ -18,7 +18,6 @@ class TopStoriesActionProcessor @Inject constructor(
     override fun actionToResult(viewAction: TopStoriesAction): Flow<TopStoriesViewResult> {
         return when (viewAction) {
             TopStoriesAction.LoadStories -> getNewStories
-            TopStoriesAction.LoadSavedStories -> emptyFlow()
         }
     }
 

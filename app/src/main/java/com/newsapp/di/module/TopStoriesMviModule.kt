@@ -12,7 +12,7 @@ import dagger.hilt.migration.DisableInstallInCheck
 
 @DisableInstallInCheck
 @Module
-interface MviModule {
+interface TopStoriesMviModule {
 
     @get:[Binds FeatureScope]
     val TopStoriesActionProcessor.actionProcessor: TopStoriesActionProcessorType
