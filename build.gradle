@@ -17,6 +17,7 @@ buildscript {
         roboelectric_version = "4.3"
         okhttp_version = "3.8.0"
         hilt_version = "2.28.3-alpha"
+        room_version = "2.2.5"
     }
 
     repositories {
