@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import com.newsapp.R
 import com.newsapp.databinding.FragmentPagerBinding
-import com.newsapp.ui.viewBinding 
+import com.newsapp.ui.base.viewBinding
 
 
 class PagerFragment : Fragment(R.layout.fragment_pager) {

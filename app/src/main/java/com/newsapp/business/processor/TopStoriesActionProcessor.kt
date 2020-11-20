@@ -21,11 +21,12 @@ class TopStoriesActionProcessor @Inject constructor(
         return when (viewAction) {
             TopStoriesAction.LoadStories -> getNewStories
             is TopStoriesAction.BookmarkStory -> bookmarkStoryModel(viewAction.storyModel)
+            is TopStoriesAction.ShowDetail -> flowOf(TopStoriesViewResult.ShowDetail(viewAction.storyModel))
         }
     }
 
-   private fun bookmarkStoryModel(storyModel: StoryModel): Flow<TopStoriesViewResult> =
-        bookmarkStory(storyModel).map {saved->
+    private fun bookmarkStoryModel(storyModel: StoryModel): Flow<TopStoriesViewResult> =
+        bookmarkStory(storyModel).map { saved ->
             if (saved)
                 TopStoriesViewResult.Bookmarked(storyModel)
             else

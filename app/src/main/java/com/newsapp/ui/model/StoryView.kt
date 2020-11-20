@@ -1,15 +1,15 @@
-package com.newsapp.business.model
+package com.newsapp.ui.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class StoryModel(
+class StoryView(
     val subsection: String,
     val title: String,
     val abstract: String,
     val url: String,
-    val image:String?,
-    val date:String
+    val image: String?,
+    val date: String
 ) : Parcelable

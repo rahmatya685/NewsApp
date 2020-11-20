@@ -1,4 +1,4 @@
-package com.newsapp.ui
+package com.newsapp.ui.base
 
 import android.view.View
 import androidx.fragment.app.Fragment

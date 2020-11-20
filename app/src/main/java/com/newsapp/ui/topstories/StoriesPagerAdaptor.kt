@@ -3,6 +3,7 @@ package com.newsapp.ui.topstories
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.newsapp.ui.bookmarks.BookmarkedStoriesFragment
 
 class StoriesPagerAdaptor(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager) {

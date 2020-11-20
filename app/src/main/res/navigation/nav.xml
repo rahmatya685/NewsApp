@@ -10,5 +10,24 @@
         android:id="@+id/topStoriesFragment"
         android:name="com.newsapp.ui.topstories.PagerFragment"
         android:label="New York Times"
-        tools:layout="@layout/fragment_pager" />
+        tools:layout="@layout/fragment_pager">
+        <action
+            android:id="@+id/open_story_detail"
+            app:destination="@id/storyDetail"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/storyDetail"
+        android:name="com.newsapp.ui.storydetail.StoryDetailFragment"
+        android:label="storyDetail" 
+        tools:layout="@layout/fragment_story_detail">
+        <argument
+            android:name="storyDetail"
+            app:argType="com.newsapp.business.model.StoryModel"
+            app:nullable="false" />
+    </dialog>
 </navigation>

@@ -4,7 +4,7 @@ import com.newsapp.di.FactoryModule
 import com.newsapp.di.FeatureScope
 import com.newsapp.di.module.BookmarkedStoriesMviModule
 import com.newsapp.di.module.BookmarkedStoriesViewModelModule
-import com.newsapp.ui.topstories.BookmarkedStoriesFragment
+import com.newsapp.ui.bookmarks.BookmarkedStoriesFragment
 import dagger.Component
 
 

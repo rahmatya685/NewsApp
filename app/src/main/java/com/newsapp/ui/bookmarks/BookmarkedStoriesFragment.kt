@@ -1,4 +1,4 @@
-package com.newsapp.ui.topstories
+package com.newsapp.ui.bookmarks
 
 import android.content.Context
 import android.os.Bundle
@@ -18,7 +18,8 @@ import com.newsapp.databinding.FragmentBookmarkedStoriesBinding
 import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui.base.MviView
-import com.newsapp.ui.viewBinding
+import com.newsapp.ui.topstories.StoriesAdaptor
+import com.newsapp.ui.base.viewBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -73,11 +74,8 @@ class BookmarkedStoriesFragment : Fragment(), MviView<BookmarkedStoriesViewState
     }
 
     private fun renderNewStories(state: BookmarkedStoriesViewState) {
-        if (state.stories.isEmpty()) {
-            showSnack("No Story Found")
-        } else {
-            storiesAdaptor.submitList(state.stories)
-        }
+        binding.tvInfo.visibility =View.GONE
+        storiesAdaptor.submitList(state.stories)
     }
 
     private fun renderError(state: BookmarkedStoriesViewState) {

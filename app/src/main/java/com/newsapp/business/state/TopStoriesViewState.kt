@@ -7,7 +7,8 @@ data class TopStoriesViewState(
     val stories: List<StoryModel>,
     val loadingMsg: String? = null,
     val errorMsg: String? = null,
-    val bookmarkedStory: StoryModel? = null
+    val bookmarkedStory: StoryModel? = null,
+    val showStoryDetail: StoryModel? = null
 ) : ViewState {
 
 
@@ -23,11 +24,15 @@ data class TopStoriesViewState(
     val hasBookmarkedStory: Boolean
         get() = bookmarkedStory != null
 
+    val hasStoryDetailToShow: Boolean
+        get() = showStoryDetail != null
+
     companion object {
         val initState: TopStoriesViewState
             get() = TopStoriesViewState(
                 stories = mutableListOf(),
-                bookmarkedStory = null
+                bookmarkedStory = null,
+                showStoryDetail = null
             )
     }
 }

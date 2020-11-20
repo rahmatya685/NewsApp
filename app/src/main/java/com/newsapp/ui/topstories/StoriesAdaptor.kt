@@ -41,6 +41,9 @@ class StoriesAdaptor @Inject constructor(
             binding.imageButton.setOnClickListener {
                 clickListener.offer(TopStoriesAction.BookmarkStory(model))
             }
+            binding.root.setOnClickListener {
+                clickListener.offer(TopStoriesAction.ShowDetail(model))
+            }
 
         }
     }

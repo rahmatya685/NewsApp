@@ -3,7 +3,7 @@ package com.newsapp.di
 import com.newsapp.di.component.AppComponent
 import com.newsapp.di.component.CoreComponent
 import com.newsapp.di.component.DaggerBookmarkedStoriesComponent
-import com.newsapp.ui.topstories.BookmarkedStoriesFragment
+import com.newsapp.ui.bookmarks.BookmarkedStoriesFragment
 import dagger.hilt.android.EntryPointAccessors
 
 internal fun inject(fragment: BookmarkedStoriesFragment) {

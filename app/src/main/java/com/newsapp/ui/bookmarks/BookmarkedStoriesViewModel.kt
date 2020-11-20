@@ -1,4 +1,4 @@
-package com.newsapp.ui.topstories
+package com.newsapp.ui.bookmarks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

@@ -18,9 +18,7 @@ import com.newsapp.databinding.FragmentTopStoriesBinding
 import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui.base.MviView
-import com.newsapp.ui.viewBinding
-import kotlinx.android.synthetic.main.fragment_top_stories.view.*
-import kotlinx.coroutines.channels.consume
+import com.newsapp.ui.base.viewBinding
 import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
@@ -80,6 +78,9 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 hideLoading()
                 renderError(state)
             }
+            state.hasStoryDetailToShow->{
+                showStoryDetail(state)
+            }
             state.hasStories -> {
                 hideLoading()
                 renderNewStories(state)
@@ -88,7 +89,12 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 hideLoading()
                 renderBookmarkedSuccessfully()
             }
+
         }
+    }
+
+    private fun showStoryDetail(state: TopStoriesViewState) {
+        navigator.get().openStoryDetail(state.showStoryDetail!!)
     }
 
     private fun renderBookmarkedSuccessfully() {

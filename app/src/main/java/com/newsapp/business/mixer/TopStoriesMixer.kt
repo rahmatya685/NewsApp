@@ -15,25 +15,36 @@ class TopStoriesMixer @Inject constructor() :
                 stories = mutableListOf(),
                 loadingMsg = "Loading",
                 errorMsg = null,
-                bookmarkedStory = null
+                bookmarkedStory = null,
+                showStoryDetail =null
             )
             is TopStoriesViewResult.Success -> TopStoriesViewState(
                 stories = result.data,
                 loadingMsg = null,
                 errorMsg = null,
-                bookmarkedStory = null
+                bookmarkedStory = null,
+                showStoryDetail =null
             )
             is TopStoriesViewResult.Failure -> TopStoriesViewState(
                 stories = mutableListOf(),
                 loadingMsg = null,
                 errorMsg = result.error,
-                bookmarkedStory = null
+                bookmarkedStory = null,
+                showStoryDetail =null
             )
             is TopStoriesViewResult.Bookmarked -> TopStoriesViewState(
                 stories = oldState.stories,
                 errorMsg = null,
                 loadingMsg = null,
-                bookmarkedStory = result.data
+                bookmarkedStory = result.data,
+                showStoryDetail =null
+            )
+            is TopStoriesViewResult.ShowDetail ->  TopStoriesViewState(
+                stories = oldState.stories,
+                errorMsg = null,
+                loadingMsg = null,
+                bookmarkedStory = null,
+                showStoryDetail = result.data
             )
         }
     }
