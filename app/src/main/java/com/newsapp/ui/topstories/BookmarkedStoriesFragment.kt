@@ -9,14 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.newsapp.R
+import com.newsapp.business.actions.BookmarkedStoriesAction
+import com.newsapp.business.actions.TopStoriesAction
 import com.newsapp.business.state.BookmarkedStoriesViewState
 import com.newsapp.databinding.FragmentBookmarkedStoriesBinding
 import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui.base.MviView
 import com.newsapp.ui.viewBinding
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -45,7 +52,10 @@ class BookmarkedStoriesFragment : Fragment(), MviView<BookmarkedStoriesViewState
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvBookmarkedStories.adapter = storiesAdaptor
+        binding.rvBookmarkedStories.layoutManager  = GridLayoutManager(activity,2)
         viewModel.viewState.observe(viewLifecycleOwner,::observeData)
+        viewModel.processAction(intents)
     }
 
     override fun observeData(state: BookmarkedStoriesViewState): Unit {
@@ -77,11 +87,11 @@ class BookmarkedStoriesFragment : Fragment(), MviView<BookmarkedStoriesViewState
     }
 
     private fun hideLoading() {
-        binding.progress.visibility = View.INVISIBLE
+        binding.refresh.isRefreshing = false
     }
 
     private fun renderLoading() {
-        binding.progress.visibility = View.VISIBLE
+        binding.refresh.isRefreshing = true
     }
 
     private fun showSnack(msg: String) =
@@ -102,6 +112,12 @@ class BookmarkedStoriesFragment : Fragment(), MviView<BookmarkedStoriesViewState
         fun newInstance() =
             BookmarkedStoriesFragment()
     }
+
+    private val refreshAction: Flow<BookmarkedStoriesAction>
+        get() = binding.refresh.refreshes().map { BookmarkedStoriesAction.LoadStories }
+
+    private val intents: Flow<BookmarkedStoriesAction>
+        get() = merge(refreshAction)
 }
 
 

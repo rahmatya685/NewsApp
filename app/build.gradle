@@ -103,4 +103,5 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.0.0-beta02"
+    implementation "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:1.0.0-beta02"
 }

@@ -6,15 +6,18 @@
     tools:context=".ui.topstories.TopStoriesFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_topnews"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_gravity="center"
-        android:layout_width="64dp"
-        android:layout_height="64dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_topnews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>

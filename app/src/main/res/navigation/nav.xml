@@ -9,6 +9,6 @@
     <fragment
         android:id="@+id/topStoriesFragment"
         android:name="com.newsapp.ui.topstories.PagerFragment"
-        android:label="fragment_top_stories"
+        android:label="New York Times"
         tools:layout="@layout/fragment_pager" />
 </navigation>

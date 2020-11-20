@@ -19,8 +19,10 @@ import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui.base.MviView
 import com.newsapp.ui.viewBinding
+import kotlinx.android.synthetic.main.fragment_top_stories.view.*
 import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.flow.*
+import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -57,12 +59,11 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvTopnews.adapter = storiesAdaptor.apply {
-          viewModel.processAction(this.clickListener.consumeAsFlow())
+            viewModel.processAction(merge(refreshAction, this.clickListener.consumeAsFlow()))
         }
         binding.rvTopnews.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
-        viewModel.processAction(intents)
     }
 
     companion object {
@@ -83,7 +84,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 hideLoading()
                 renderNewStories(state)
             }
-            state.hasBookmarkedStory->{
+            state.hasBookmarkedStory -> {
                 hideLoading()
                 renderBookmarkedSuccessfully()
             }
@@ -91,7 +92,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     private fun renderBookmarkedSuccessfully() {
-         showSnack("Bookmarked Successfully")
+        showSnack("Bookmarked Successfully")
     }
 
     private fun renderNewStories(state: TopStoriesViewState) {
@@ -109,19 +110,23 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     private fun hideLoading() {
-        binding.progress.visibility = View.INVISIBLE
+        binding.refresh.isRefreshing = false
     }
 
     private fun renderLoading() {
-        binding.progress.visibility = View.VISIBLE
+        binding.refresh.isRefreshing = false
     }
 
     private fun showSnack(msg: String) =
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
 
 
-    private val bookmarkStoryAction: Flow<TopStoriesAction> = flowOf()
+    private val bookmarkAction: Flow<TopStoriesAction>
+        get() = storiesAdaptor.clickListener.consumeAsFlow()
 
-      private val intents: Flow<TopStoriesAction>
-        get() = bookmarkStoryAction
+    private val refreshAction: Flow<TopStoriesAction>
+        get() = binding.refresh.refreshes().map { TopStoriesAction.LoadStories }
+
+    private val intents: Flow<TopStoriesAction>
+        get() = merge(refreshAction,bookmarkAction)
 }
