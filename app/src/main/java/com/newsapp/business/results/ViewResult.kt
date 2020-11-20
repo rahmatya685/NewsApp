@@ -1,3 +1,3 @@
 package com.newsapp.business.results
 
-interface Result
+interface ViewResult
