@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.newsapp.R
 import com.newsapp.business.actions.BookmarkedStoriesAction
-import com.newsapp.business.actions.TopStoriesAction
 import com.newsapp.business.state.BookmarkedStoriesViewState
 import com.newsapp.databinding.FragmentBookmarkedStoriesBinding
 import com.newsapp.di.inject
@@ -69,6 +68,7 @@ class BookmarkedStoriesFragment : Fragment(), MviView<BookmarkedStoriesViewState
                 hideLoading()
                 renderNewStories(state)
             }
+            else -> hideLoading()
         }
     }
 

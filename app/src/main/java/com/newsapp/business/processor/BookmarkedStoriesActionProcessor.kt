@@ -28,7 +28,7 @@ class BookmarkedStoriesActionProcessor @Inject constructor(
     private val getLocalStories: Flow<BookmarkedStoriesViewResult>
         get() = stories.map {
             if (it.isEmpty()) {
-                BookmarkedStoriesViewResult.Failure("No Data Found")
+                BookmarkedStoriesViewResult.Failure("No bookmarked story has found")
             } else {
                 BookmarkedStoriesViewResult.Success(it)
             }

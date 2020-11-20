@@ -25,8 +25,8 @@ class BookmarkedStoriesMixer  @Inject constructor() :
             )
             is BookmarkedStoriesViewResult.Failure -> BookmarkedStoriesViewState(
                 stories = mutableListOf(),
-                loadingMsg = result.error,
-                errorMsg = null
+                errorMsg = result.error,
+                loadingMsg = null
             )
         }
     }
