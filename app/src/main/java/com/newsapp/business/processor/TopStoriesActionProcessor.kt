@@ -1,6 +1,7 @@
 package com.newsapp.business.processor
 
 import com.newsapp.business.actions.TopStoriesAction
+import com.newsapp.business.executor.BookmarkStoryExecutor
 import com.newsapp.business.executor.FetchTopStoriesExecutor
 import com.newsapp.business.model.StoryModel
 import com.newsapp.business.results.TopStoriesViewResult
@@ -8,7 +9,8 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class TopStoriesActionProcessor @Inject constructor(
-    private val storyFetcher: FetchTopStoriesExecutor
+    private val storyFetcher: FetchTopStoriesExecutor,
+    private val bookmarkStory: BookmarkStoryExecutor
 ) :
     ActionProcessor<TopStoriesAction, TopStoriesViewResult> {
 
@@ -18,8 +20,21 @@ class TopStoriesActionProcessor @Inject constructor(
     override fun actionToResult(viewAction: TopStoriesAction): Flow<TopStoriesViewResult> {
         return when (viewAction) {
             TopStoriesAction.LoadStories -> getNewStories
+            is TopStoriesAction.BookmarkStory -> bookmarkStoryModel(viewAction.storyModel)
         }
     }
+
+   private fun bookmarkStoryModel(storyModel: StoryModel): Flow<TopStoriesViewResult> =
+        bookmarkStory(storyModel).map {saved->
+            if (saved)
+                TopStoriesViewResult.Bookmarked(storyModel)
+            else
+                TopStoriesViewResult.Failure("Already Bookmarked")
+        }.onStart {
+            emit(TopStoriesViewResult.Loading)
+        }.catch { error ->
+            emit(TopStoriesViewResult.Failure(error = error.toString()))
+        }
 
 
     private val getNewStories: Flow<TopStoriesViewResult>

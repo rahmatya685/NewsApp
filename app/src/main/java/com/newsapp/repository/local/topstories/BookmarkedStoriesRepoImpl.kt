@@ -1,6 +1,6 @@
 package com.newsapp.repository.local.topstories
 
- import javax.inject.Inject
+import javax.inject.Inject
 
 class BookmarkedStoriesRepoImpl @Inject constructor(
     private val bookmarkedEntityDao: BookmarkedEntityDao
@@ -8,5 +8,15 @@ class BookmarkedStoriesRepoImpl @Inject constructor(
 
     override suspend fun getBookmarkedStories(): List<BookmarkedEntity> =
         bookmarkedEntityDao.getBookmarkedStories()
+
+
+    override suspend fun bookmarkStory(entity: BookmarkedEntity): Boolean {
+        return if (bookmarkedEntityDao.isInsertedAlready(entity.title))
+            false
+        else {
+            bookmarkedEntityDao.insert(entity)
+            true
+        }
+    }
 
 }

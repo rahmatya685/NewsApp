@@ -6,7 +6,8 @@ import com.newsapp.business.model.StoryModel
 data class TopStoriesViewState(
     val stories: List<StoryModel>,
     val loadingMsg: String? = null,
-    val errorMsg: String? = null
+    val errorMsg: String? = null,
+    val bookmarkedStory: StoryModel? = null
 ) : ViewState {
 
 
@@ -19,10 +20,14 @@ data class TopStoriesViewState(
     val hasStories: Boolean
         get() = stories.isNotEmpty()
 
+    val hasBookmarkedStory: Boolean
+        get() = bookmarkedStory != null
+
     companion object {
         val initState: TopStoriesViewState
             get() = TopStoriesViewState(
-                stories = mutableListOf()
+                stories = mutableListOf(),
+                bookmarkedStory = null
             )
     }
 }

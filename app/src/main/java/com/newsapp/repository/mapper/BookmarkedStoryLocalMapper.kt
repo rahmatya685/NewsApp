@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class BookmarkedStoryLocalMapper @Inject constructor() :
     Mapper<BookmarkedEntity, StoryModel> {
-    override fun mapFromModel(entity: BookmarkedEntity): StoryModel {
+    override fun mapFrom(entity: BookmarkedEntity): StoryModel {
         return StoryModel(
             title = entity.title,
             abstract = entity.abstract,
@@ -16,4 +16,6 @@ class BookmarkedStoryLocalMapper @Inject constructor() :
             image = entity.image
         )
     }
+
+
 }

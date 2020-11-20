@@ -6,18 +6,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.newsapp.R
+import com.newsapp.business.actions.TopStoriesAction
 import com.newsapp.business.model.StoryModel
 import com.newsapp.databinding.ItemStoryBinding
 import com.newsapp.ui.base.ImageLoader
 import com.newsapp.ui.base.inflate
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.map
+import reactivecircus.flowbinding.android.view.clicks
+import java.util.concurrent.Flow
 import javax.inject.Inject
+
 
 class StoriesAdaptor @Inject constructor(
     private val imageLoader: ImageLoader
 ) :
     ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 
-    class StoryViewHolder(
+    var clickListener: Channel<TopStoriesAction> = Channel { }
+
+    inner class StoryViewHolder(
         private val binding: ItemStoryBinding,
         private val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -29,6 +37,11 @@ class StoriesAdaptor @Inject constructor(
             }
             binding.tvDate.text = model.date
             binding.tvTitle.text = model.title
+
+            binding.imageButton.setOnClickListener {
+                clickListener.offer(TopStoriesAction.BookmarkStory(model))
+            }
+
         }
     }
 

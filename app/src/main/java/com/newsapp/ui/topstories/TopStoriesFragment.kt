@@ -12,12 +12,15 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.newsapp.R
+import com.newsapp.business.actions.TopStoriesAction
 import com.newsapp.business.state.TopStoriesViewState
 import com.newsapp.databinding.FragmentTopStoriesBinding
 import com.newsapp.di.inject
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui.base.MviView
 import com.newsapp.ui.viewBinding
+import kotlinx.coroutines.channels.consume
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -53,10 +56,13 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTopnews.adapter = storiesAdaptor
+        binding.rvTopnews.adapter = storiesAdaptor.apply {
+          viewModel.processAction(this.clickListener.consumeAsFlow())
+        }
         binding.rvTopnews.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
+        viewModel.processAction(intents)
     }
 
     companion object {
@@ -77,7 +83,15 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 hideLoading()
                 renderNewStories(state)
             }
+            state.hasBookmarkedStory->{
+                hideLoading()
+                renderBookmarkedSuccessfully()
+            }
         }
+    }
+
+    private fun renderBookmarkedSuccessfully() {
+         showSnack("Bookmarked Successfully")
     }
 
     private fun renderNewStories(state: TopStoriesViewState) {
@@ -104,4 +118,10 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     private fun showSnack(msg: String) =
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+
+
+    private val bookmarkStoryAction: Flow<TopStoriesAction> = flowOf()
+
+      private val intents: Flow<TopStoriesAction>
+        get() = bookmarkStoryAction
 }

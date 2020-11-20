@@ -34,6 +34,6 @@ data class Results (
 	@SerializedName("org_facet") val org_facet : List<String>,
 	@SerializedName("per_facet") val per_facet : List<String>,
 	@SerializedName("geo_facet") val geo_facet : List<String>,
-	@SerializedName("multimedia") val multimedia : List<Multimedia>,
+	@SerializedName("multimedia") val multimedia : List<Multimedia>?,
 	@SerializedName("short_url") val short_url : String
 )
