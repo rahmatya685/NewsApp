@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/topStoriesFragment"
-        android:name="com.newsapp.ui.topstories.TopStoriesFragment"
+        android:name="com.newsapp.ui.topstories.PagerFragment"
         android:label="fragment_top_stories"
-        tools:layout="@layout/fragment_top_stories" />
+        tools:layout="@layout/fragment_pager" />
 </navigation>

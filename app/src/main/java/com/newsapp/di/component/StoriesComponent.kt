@@ -4,7 +4,7 @@ import com.newsapp.di.FactoryModule
 import com.newsapp.di.FeatureScope
 import com.newsapp.di.module.MviModule
 import com.newsapp.di.module.TopStoriesViewModelModule
-import com.newsapp.ui.topstories.TopStoriesFragment
+import com.newsapp.ui.topstories.PagerFragment
 import dagger.Component
 
 
@@ -15,7 +15,7 @@ import dagger.Component
 )
 interface StoriesComponent {
 
-    fun inject(frg: TopStoriesFragment)
+    fun inject(frg: PagerFragment)
 
     @Component.Factory
     interface Factory {

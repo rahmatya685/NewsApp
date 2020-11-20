@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.newsapp.R
 
-class TopStoriesFragment : Fragment() {
+
+class BookmarkedStoriesFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -15,7 +16,7 @@ class TopStoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_top_stories,
+            R.layout.fragment_bookmarked_stories,
             container, false
         )
     }
@@ -23,6 +24,6 @@ class TopStoriesFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            TopStoriesFragment()
+            BookmarkedStoriesFragment()
     }
 }
