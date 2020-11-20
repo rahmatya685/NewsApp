@@ -11,10 +11,10 @@ data class TopStoriesViewState(
 
 
     val isLoading: Boolean
-        get() = loadingMsg == null
+        get() = loadingMsg != null
 
     val hasError: Boolean
-        get() = errorMsg == null
+        get() = errorMsg != null
 
     val hasStories: Boolean
         get() = stories.isNotEmpty()

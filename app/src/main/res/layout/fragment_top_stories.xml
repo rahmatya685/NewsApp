@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.topstories.TopStoriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_topnews"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_gravity="center"
+        android:layout_width="64dp"
+        android:layout_height="64dp" />
 
 </FrameLayout>

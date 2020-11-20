@@ -10,9 +10,9 @@ class StoriesPagerAdaptor(fragmentManager: FragmentManager) :
     private val fragments = arrayListOf<Pair<String, Fragment>>()
 
     init {
-        fragments.add("Bookmark" to BookmarkedStoriesFragment.newInstance())
         fragments.add("Top Stories" to TopStoriesFragment.newInstance())
-    }
+        fragments.add("Bookmark" to BookmarkedStoriesFragment.newInstance())
+     }
 
     override fun getCount(): Int = fragments.size
 
