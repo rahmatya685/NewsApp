@@ -1,2 +1,6 @@
-include ':app'
+include ':features:top_stories'
+include 'features:bookmark'
+include 'framework:app'
+
+
 rootProject.name = "NewsApp"
