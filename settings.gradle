@@ -1,3 +1,5 @@
+include ':core'
+include 'common:views'
 include ':features:top_stories'
 include 'features:bookmark'
 include 'framework:app'
