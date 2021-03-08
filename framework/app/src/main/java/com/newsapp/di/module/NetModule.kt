@@ -1,12 +1,10 @@
 package com.newsapp.di.module
 
-import com.newsapp.repository.StoryRepo
-import com.newsapp.repository.StoryRepoImpl
-import com.newsapp.repository.remote.base.RetrofitCreator
-import com.newsapp.repository.remote.topstories.TopStoriesApi
-import com.newsapp.repository.remote.topstories.TopStoriesApiImpl
-import com.newsapp.repository.remote.topstories.TopStoriesService
-import com.newsapp.util.Constants
+import com.newsapp.remo_impl.remote.base.RetrofitCreator
+import com.newsapp.remo_impl.remote.topstories.TopStoriesApi
+import com.newsapp.remo_impl.remote.topstories.TopStoriesApiImpl
+import com.newsapp.remo_impl.remote.topstories.TopStoriesService
+import com.newsapp.remo_impl.Constants
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,14 +18,15 @@ interface NetModule {
 
 
     @get:[Binds Singleton]
-    val TopStoriesApiImpl.bindRemote: TopStoriesApi
+    val com.newsapp.remo_impl.remote.topstories.TopStoriesApiImpl.bindRemote: com.newsapp.remo_impl.remote.topstories.TopStoriesApi
 
 
     companion object{
         @Singleton
         @Provides
-        fun provideTopStoriesService(): TopStoriesService =
-            RetrofitCreator(Constants.URL).build().create(TopStoriesService::class.java)
+        fun provideTopStoriesService(): com.newsapp.remo_impl.remote.topstories.TopStoriesService =
+            com.newsapp.remo_impl.remote.base.RetrofitCreator(com.newsapp.remo_impl.Constants.URL)
+                .build().create(com.newsapp.remo_impl.remote.topstories.TopStoriesService::class.java)
     }
 
 }

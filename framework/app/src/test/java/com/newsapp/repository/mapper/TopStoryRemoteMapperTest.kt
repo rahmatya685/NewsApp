@@ -2,7 +2,7 @@ package com.newsapp.repository.mapper
 
 import com.google.gson.Gson
 import com.newsapp.DummyData
-import com.newsapp.repository.dto.TopStoriesDto
+import com.newsapp.remo_impl.dto.TopStoriesDto
 import junit.framework.TestCase
 import org.junit.Test
 
@@ -10,8 +10,8 @@ class TopStoryRemoteMapperTest : TestCase() {
 
     @Test
     fun testMapFromModel() {
-        val dto = Gson().fromJson(DummyData.topStoriesDto, TopStoriesDto::class.java)
-        val model = TopStoryRemoteMapper().mapFrom(dto)
+        val dto = Gson().fromJson(DummyData.topStoriesDto, com.newsapp.remo_impl.dto.TopStoriesDto::class.java)
+        val model = com.newsapp.remo_impl.mapper.TopStoryRemoteMapper().mapFrom(dto)
         assertTrue(model.size == 3)
         assertTrue(model.first().title == "Trump Targets Michigan in His Ploy to Subvert the Election")
         assertTrue(model.first().url == "https://www.nytimes.com/2020/11/19/us/politics/trump-michigan-election.html")

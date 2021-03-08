@@ -4,14 +4,17 @@ import com.newsapp.di.FactoryModule
 import com.newsapp.di.FeatureScope
 import com.newsapp.di.module.BookmarkedStoriesMviModule
 import com.newsapp.di.module.BookmarkedStoriesViewModelModule
-import com.newsapp.ui.bookmarks.BookmarkedStoriesFragment
+import com.newapp.bookmark.BookmarkedStoriesFragment
 import dagger.Component
 
 
 @FeatureScope
 @Component(
     dependencies = [CoreComponent::class, AppComponent::class],
-    modules = [FactoryModule::class, BookmarkedStoriesViewModelModule::class, BookmarkedStoriesMviModule::class]
+    modules = [
+        FactoryModule::class,
+        BookmarkedStoriesViewModelModule::class,
+        BookmarkedStoriesMviModule::class]
 )
 interface BookmarkedStoriesComponent {
 

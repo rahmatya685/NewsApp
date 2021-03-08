@@ -19,7 +19,7 @@ import dagger.hilt.android.components.ActivityComponent
 interface NavigationModule {
 
     @get:Binds
-    val NavigationDispatcherImpl.navigationDispatcher: NavigationDispatcher
+    val com.newsapp.navigation.NavigationDispatcherImpl.navigationDispatcher: com.newsapp.navigation.NavigationDispatcher
 
     companion object {
         @Provides

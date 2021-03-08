@@ -2,12 +2,11 @@ package com.newsapp.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.newsapp.di.FeatureScope
-import com.newsapp.repository.local.base.DB_NAME
-import com.newsapp.repository.local.base.LocalDb
-import com.newsapp.repository.local.topstories.BookmarkedEntityDao
-import com.newsapp.repository.local.topstories.BookmarkedStoriesRepo
-import com.newsapp.repository.local.topstories.BookmarkedStoriesRepoImpl
+import com.newsapp.remo_impl.local.base.DB_NAME
+import com.newsapp.remo_impl.local.base.LocalDb
+import com.newsapp.remo_impl.local.topstories.BookmarkedEntityDao
+import com.newsapp.remo_impl.local.topstories.BookmarkedStoriesRepo
+import com.newsapp.remo_impl.local.topstories.BookmarkedStoriesRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,22 +21,22 @@ import javax.inject.Singleton
 interface LocalDbModule {
 
     @get:[Binds Singleton]
-    val BookmarkedStoriesRepoImpl.bookmarkedRepo:BookmarkedStoriesRepo
+    val com.newsapp.remo_impl.local.topstories.BookmarkedStoriesRepoImpl.bookmarkedRepo: com.newsapp.remo_impl.local.topstories.BookmarkedStoriesRepo
 
     companion object {
 
         @Provides
         @Singleton
-        fun provideAppDatabase(@ApplicationContext appContext: Context): LocalDb {
+        fun provideAppDatabase(@ApplicationContext appContext: Context): com.newsapp.remo_impl.local.base.LocalDb {
             return Room.databaseBuilder(
                 appContext,
-                LocalDb::class.java,
-                DB_NAME
+                com.newsapp.remo_impl.local.base.LocalDb::class.java,
+                com.newsapp.remo_impl.local.base.DB_NAME
             ).build()
         }
 
         @Provides
-        fun provideBookmarkedStoriesDao(db: LocalDb): BookmarkedEntityDao {
+        fun provideBookmarkedStoriesDao(db: com.newsapp.remo_impl.local.base.LocalDb): com.newsapp.remo_impl.local.topstories.BookmarkedEntityDao {
             return db.bookmarkedEntityDao()
         }
 

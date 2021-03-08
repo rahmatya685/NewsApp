@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.newsapp.R
-import com.newsapp.business.model.StoryModel
+import com.newsapp.business.top_stories.model.StoryModel
 import com.newsapp.databinding.FragmentStoryDetailBinding
-import com.newsapp.ui.base.ImageLoaderImpl
-import com.newsapp.ui.base.viewBinding
+import com.newsapp.views.ImageLoaderImpl
+import com.newsapp.views.viewBinding
 
 
 class StoryDetailFragment : BottomSheetDialogFragment() {
@@ -41,9 +41,9 @@ class StoryDetailFragment : BottomSheetDialogFragment() {
 
     }
 
-    private fun bindInfo(storyModel: StoryModel) {
+    private fun bindInfo(storyModel: com.newsapp.business.top_stories.model.StoryModel) {
         storyModel.image?.let { url ->
-            ImageLoaderImpl().loadImage(binding.imgUser, url)
+            com.newsapp.views.ImageLoaderImpl().loadImage(binding.imgUser, url)
         }
         binding.tvAbstract.text = storyModel.abstract
         binding.tvDate.text = storyModel.date

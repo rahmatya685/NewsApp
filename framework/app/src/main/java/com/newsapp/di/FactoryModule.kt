@@ -1,7 +1,7 @@
 package com.newsapp.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.newsapp.di.factory.ViewModelFactory
+import com.newsapp.views.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.migration.DisableInstallInCheck

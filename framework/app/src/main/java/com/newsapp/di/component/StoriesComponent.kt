@@ -4,14 +4,17 @@ import com.newsapp.di.FactoryModule
 import com.newsapp.di.FeatureScope
 import com.newsapp.di.module.TopStoriesMviModule
 import com.newsapp.di.module.TopStoriesViewModelModule
-import com.newsapp.ui.topstories.TopStoriesFragment
 import dagger.Component
 
 
 @FeatureScope
 @Component(
     dependencies = [CoreComponent::class, AppComponent::class],
-    modules = [FactoryModule::class, TopStoriesViewModelModule::class, TopStoriesMviModule::class]
+    modules = [
+        FactoryModule::class,
+        TopStoriesViewModelModule::class,
+        TopStoriesMviModule::class
+    ]
 )
 interface StoriesComponent {
 

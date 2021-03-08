@@ -1,7 +1,7 @@
 package com.newsapp.di.module
 
-import com.newsapp.business.executor.PostExecutionThread
-import com.newsapp.business.executor.PostExecutionThreadImpl
+import com.newsapp.core_business.executor.PostExecutionThread
+import com.newsapp.ui_base.PostExecutionThreadImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface ExecutorModule {
 
     @get:[Binds Singleton]
-    val PostExecutionThreadImpl.postExecutionThread: PostExecutionThread
+    val com.newsapp.ui_base.PostExecutionThreadImpl.postExecutionThread: com.newsapp.core_business.executor.PostExecutionThread
 }
