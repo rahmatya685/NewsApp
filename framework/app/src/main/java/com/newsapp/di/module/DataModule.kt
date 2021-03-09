@@ -14,6 +14,6 @@ import javax.inject.Singleton
 interface DataModule {
 
     @get:[Binds Singleton]
-    val com.newsapp.remo_impl.StoryRepoImpl.topStoriesRep: com.newsapp.remo_impl.StoryRepo
+    val StoryRepoImpl.topStoriesRep: StoryRepo
 
 }

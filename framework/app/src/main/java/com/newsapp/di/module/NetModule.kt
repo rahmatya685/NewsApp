@@ -18,15 +18,15 @@ interface NetModule {
 
 
     @get:[Binds Singleton]
-    val com.newsapp.remo_impl.remote.topstories.TopStoriesApiImpl.bindRemote: com.newsapp.remo_impl.remote.topstories.TopStoriesApi
+    val TopStoriesApiImpl.bindRemote: TopStoriesApi
 
 
-    companion object{
+    companion object {
         @Singleton
         @Provides
-        fun provideTopStoriesService(): com.newsapp.remo_impl.remote.topstories.TopStoriesService =
-            com.newsapp.remo_impl.remote.base.RetrofitCreator(com.newsapp.remo_impl.Constants.URL)
-                .build().create(com.newsapp.remo_impl.remote.topstories.TopStoriesService::class.java)
+        fun provideTopStoriesService(): TopStoriesService =
+            RetrofitCreator(Constants.URL)
+                .build().create(TopStoriesService::class.java)
     }
 
 }

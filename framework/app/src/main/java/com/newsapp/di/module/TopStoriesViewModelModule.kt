@@ -13,6 +13,6 @@ import dagger.multibindings.IntoMap
 @Module
 interface TopStoriesViewModelModule {
 
-    @get:[Binds IntoMap ViewModelKey(com.newsapp.top_stories.view_model.TopStoriesViewModel::class)]
-    val com.newsapp.top_stories.view_model.TopStoriesViewModel.topStoriesViewModel: ViewModel
+    @get:[Binds IntoMap ViewModelKey(TopStoriesViewModel::class)]
+    val TopStoriesViewModel.topStoriesViewModel: ViewModel
 }

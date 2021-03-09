@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface ImageLoaderModule {
 
     @get:[Binds Singleton]
-    val com.newsapp.views.ImageLoaderImpl.imageLoader: com.newsapp.views.ImageLoader
+    val ImageLoaderImpl.imageLoader: ImageLoader
 }

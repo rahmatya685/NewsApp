@@ -13,6 +13,6 @@ import dagger.multibindings.IntoMap
 @Module
 interface BookmarkedStoriesViewModelModule {
 
-    @get:[Binds IntoMap ViewModelKey(com.newapp.bookmark.BookmarkedStoriesViewModel::class)]
-    val com.newapp.bookmark.BookmarkedStoriesViewModel.bookmarkedViewModel: ViewModel
+    @get:[Binds IntoMap ViewModelKey(BookmarkedStoriesViewModel::class)]
+    val BookmarkedStoriesViewModel.bookmarkedViewModel: ViewModel
 }

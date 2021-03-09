@@ -15,8 +15,8 @@ import dagger.hilt.migration.DisableInstallInCheck
 interface TopStoriesMviModule {
 
     @get:[Binds FeatureScope]
-    val com.newsapp.business.top_stories.processor.TopStoriesActionProcessor.actionProcessor: TopStoriesActionProcessorType
+    val TopStoriesActionProcessor.actionProcessor: TopStoriesActionProcessorType
 
     @get:[Binds FeatureScope]
-    val com.newsapp.business.top_stories.mixer.TopStoriesMixer.mixer: TopStoriesMixerType
+    val TopStoriesMixer.mixer: TopStoriesMixerType
 }

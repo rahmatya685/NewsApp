@@ -9,6 +9,6 @@ import dagger.hilt.android.components.ActivityComponent
 @EntryPoint
 @InstallIn(ActivityComponent::class)
 interface AppComponent {
-    val navigationDispatcher: com.newsapp.navigation.NavigationDispatcher
-    val postExecutionThread: com.newsapp.core_business.executor.PostExecutionThread
+    val navigationDispatcher: NavigationDispatcher
+    val postExecutionThread: PostExecutionThread
 }

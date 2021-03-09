@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface ExecutorModule {
 
     @get:[Binds Singleton]
-    val com.newsapp.ui_base.PostExecutionThreadImpl.postExecutionThread: com.newsapp.core_business.executor.PostExecutionThread
+    val PostExecutionThreadImpl.postExecutionThread: PostExecutionThread
 }

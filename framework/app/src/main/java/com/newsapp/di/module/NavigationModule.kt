@@ -19,13 +19,15 @@ import dagger.hilt.android.components.ActivityComponent
 interface NavigationModule {
 
     @get:Binds
-    val com.newsapp.navigation.NavigationDispatcherImpl.navigationDispatcher: com.newsapp.navigation.NavigationDispatcher
+    val NavigationDispatcherImpl.navigationDispatcher: NavigationDispatcher
 
     companion object {
         @Provides
         fun provideNavController(activity: Activity): NavController {
             val frg =
-                (activity as AppCompatActivity).supportFragmentManager.findFragmentById(R.id.mainNavHostFragment)
+                (activity as AppCompatActivity)
+                    .supportFragmentManager
+                    .findFragmentById(R.id.mainNavHostFragment)
             return frg!!.findNavController()
         }
 
