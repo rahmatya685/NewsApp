@@ -18,6 +18,6 @@ interface BookmarkedEntityDao : BaseDao<BookmarkedEntity> {
 
 
     @Query("delete from BOOK_MARKED_ENTITY where BOOK_MARKED_ENTITY.ID=:id")
-    suspend fun delete(id: Int): Boolean
+    suspend fun delete(id: Int)
 
 }

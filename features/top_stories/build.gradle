@@ -68,11 +68,16 @@ dependencies {
     implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.0.0-beta02"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:1.0.0-beta02"
 
-    implementation project(":common:views")
     implementation project(":ui_base")
     implementation project(":business:top_stories")
     implementation project(":business:core_business")
+    implementation project(":common:repo_impl")
+    implementation project(":common:mapper")
+    implementation project(":common:executer")
+    implementation project(":common:di")
+    implementation project(":common:views")
     implementation project(":common:navigation")
+
 
 
 }

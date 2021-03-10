@@ -17,9 +17,10 @@ import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.top_stories.R
 import com.newsapp.top_stories.adaptor.StoriesAdaptor
 import com.newsapp.top_stories.databinding.FragmentTopStoriesBinding
+import com.newsapp.top_stories.di.injector.inject
 import com.newsapp.top_stories.view_model.TopStoriesViewModel
 import com.newsapp.ui_base.MviView
-import com.newsapp.views.viewBinding
+import com.newsapp.views.common.viewBinding
 import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: Provider<NavigationDispatcher>
+    lateinit var navigator: Provider<com.newsapp.navigation.NavigationDispatcher>
 
     private val viewModel: TopStoriesViewModel by viewModels { factory }
 

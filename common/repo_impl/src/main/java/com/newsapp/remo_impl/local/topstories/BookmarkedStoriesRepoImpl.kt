@@ -1,5 +1,6 @@
 package com.newsapp.remo_impl.local.topstories
 
+import java.lang.Exception
 import javax.inject.Inject
 
 class BookmarkedStoriesRepoImpl @Inject constructor(
@@ -19,7 +20,14 @@ class BookmarkedStoriesRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteBookmark(id: Int): Boolean =
-        bookmarkedEntityDao.delete(id)
+    override suspend fun deleteBookmark(id: Int): Boolean {
+        return try {
+            bookmarkedEntityDao.delete(id)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 
 }

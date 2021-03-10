@@ -13,12 +13,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.newapp.bookmark.R
 import com.newapp.bookmark.adaptor.BookmarkedStoriesAdaptor
 import com.newapp.bookmark.databinding.FragmentBookmarkedStoriesBinding
+import com.newapp.bookmark.di.injector.inject
 import com.newsapp.business.bookmarks.state.BookmarkedStoriesViewState
 import com.newapp.bookmark.viewmodel.BookmarkedStoriesViewModel
 import com.newsapp.business.bookmarks.actions.BookmarkedStoriesAction
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui_base.MviView
-import com.newsapp.views.viewBinding
+import com.newsapp.views.common.viewBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge

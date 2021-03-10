@@ -9,8 +9,8 @@ import com.newapp.bookmark.R
 import com.newapp.bookmark.databinding.ItemBookmarkedStoryBinding
 import com.newsapp.business.bookmarks.actions.BookmarkedStoriesAction
 import com.newsapp.business.bookmarks.model.Bookmark
-import com.newsapp.views.ImageLoader
-import com.newsapp.views.inflate
+import com.newsapp.views.common.ImageLoader
+import com.newsapp.views.common.inflate
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 

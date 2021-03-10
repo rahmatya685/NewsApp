@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="NewsApp.business.bookmarks" target="1.8" />
+      <module name="NewsApp.business.top_stories" target="1.8" />
+      <module name="NewsApp.common.di" target="1.8" />
+      <module name="NewsApp.common.executer" target="1.8" />
+      <module name="NewsApp.common.navigation" target="1.8" />
+      <module name="NewsApp.common.repo_impl" target="1.8" />
+      <module name="NewsApp.common.views" target="1.8" />
+      <module name="NewsApp.features.bookmark" target="1.8" />
+      <module name="NewsApp.features.story_details" target="1.8" />
+      <module name="NewsApp.features.top_stories" target="1.8" />
+      <module name="NewsApp.framework.app" target="1.8" />
+      <module name="NewsApp.ui_base" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-internal class StoryRepoImpl @Inject constructor(
+class StoryRepoImpl @Inject constructor(
     private val api: TopStoriesApi,
     private val localRepo: BookmarkedStoriesRepo,
     private val mapper: TopStoryRemoteMapper,
@@ -33,7 +33,7 @@ internal class StoryRepoImpl @Inject constructor(
         emit(result)
     }
 
-    override fun unBookmarkStory(id: Int): Flow<Boolean> = flow{
+    override fun unBookmarkStory(id: Int): Flow<Boolean> = flow {
         emit(localRepo.deleteBookmark(id))
     }
 

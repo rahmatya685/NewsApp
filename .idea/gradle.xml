@@ -12,14 +12,24 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/business" />
+            <option value="$PROJECT_DIR$/business/bookmarks" />
+            <option value="$PROJECT_DIR$/business/core_business" />
+            <option value="$PROJECT_DIR$/business/top_stories" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/di" />
+            <option value="$PROJECT_DIR$/common/executer" />
+            <option value="$PROJECT_DIR$/common/mapper" />
+            <option value="$PROJECT_DIR$/common/navigation" />
+            <option value="$PROJECT_DIR$/common/repo_impl" />
             <option value="$PROJECT_DIR$/common/views" />
-            <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/bookmark" />
+            <option value="$PROJECT_DIR$/features/story_details" />
             <option value="$PROJECT_DIR$/features/top_stories" />
             <option value="$PROJECT_DIR$/framework" />
             <option value="$PROJECT_DIR$/framework/app" />
+            <option value="$PROJECT_DIR$/ui_base" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

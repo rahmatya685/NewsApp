@@ -9,12 +9,12 @@ import com.newsapp.business.top_stories.action.TopStoriesAction
 import com.newsapp.business.top_stories.model.StoryModel
 import com.newsapp.top_stories.R
 import com.newsapp.top_stories.databinding.ItemStoryBinding
-import com.newsapp.views.ImageLoader
-import com.newsapp.views.inflate
+import com.newsapp.views.common.ImageLoader
+import com.newsapp.views.common.inflate
 import javax.inject.Inject
 
 class StoriesAdaptor @Inject constructor(
-    private val imageLoader:  ImageLoader
+    private val imageLoader: ImageLoader
 ) :
     ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 

@@ -1,12 +1,13 @@
+include ':common:navigation'
+include ':common:executer'
+include ':common:di'
 include ':common:mapper'
 include ':common:repo_impl'
 include 'business:core_business'
 include ':business:bookmarks'
 include ':business:top_stories'
 
-include ':common:di'
 include ':common:views'
-include ':common:navigation'
 include ':ui_base'
 
 include ':features:story_details'

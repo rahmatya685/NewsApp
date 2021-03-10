@@ -48,13 +48,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
-
-    //Kotlin Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
-
+    implementation "com.google.dagger:hilt-android:${rootProject.hilt_version}"
+    kapt "com.google.dagger:hilt-android-compiler:${rootProject.hilt_version}"
 
     implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata:${rootProject.lifecycle_version}"
@@ -63,15 +61,19 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.lifecycle_version}"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation "com.google.dagger:hilt-android:${rootProject.hilt_version}"
-    kapt "com.google.dagger:hilt-android-compiler:${rootProject.hilt_version}"
+
     implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.0.0-beta02"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:1.0.0-beta02"
 
     implementation project(":business:core_business")
     implementation project(":business:bookmarks")
-    implementation project(":common:views")
     implementation project(":ui_base")
+    implementation project(":common:di")
+    implementation project(":common:views")
+    implementation project(":common:mapper")
+    implementation project(":common:executer")
+    implementation project(":common:repo_impl")
     implementation project(":common:navigation")
+
 
 }
