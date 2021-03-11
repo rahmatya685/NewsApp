@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_story_detail">
         <argument
             android:name="storyDetail"
-            app:argType="com.newsapp.business.model.StoryModel"
+            app:argType="com.newsapp.business.top_stories.model.StoryModel"
             app:nullable="false" />
     </dialog>
 </navigation>
