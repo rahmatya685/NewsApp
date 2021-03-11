@@ -1,10 +1,10 @@
 package com.newsapp.remo_impl.di.module
 
+import com.newsapp.remo_impl.BuildConfig
 import com.newsapp.remo_impl.remote.base.RetrofitCreator
 import com.newsapp.remo_impl.remote.topstories.TopStoriesApi
 import com.newsapp.remo_impl.remote.topstories.TopStoriesApiImpl
 import com.newsapp.remo_impl.remote.topstories.TopStoriesService
-import com.newsapp.remo_impl.Constants
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,7 @@ interface NetModule {
         @Singleton
         @Provides
         fun provideTopStoriesService(): TopStoriesService =
-            RetrofitCreator(Constants.URL)
+            RetrofitCreator(BuildConfig.NTYMES_URL)
                 .build().create(TopStoriesService::class.java)
     }
 
