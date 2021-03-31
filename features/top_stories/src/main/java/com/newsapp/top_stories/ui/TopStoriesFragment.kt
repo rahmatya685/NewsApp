@@ -35,7 +35,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: Provider<com.newsapp.navigation.NavigationDispatcher>
+    lateinit var navigator: Provider<NavigationDispatcher>
 
     private val viewModel: TopStoriesViewModel by viewModels { factory }
 
@@ -58,12 +58,13 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTopnews.adapter = storiesAdaptor.apply {
-            viewModel.processAction(merge(refreshAction, this.clickListener.consumeAsFlow()))
-        }
+        viewModel.processAction(intents)
+        viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
+
+        binding.rvTopnews.adapter = storiesAdaptor
         binding.rvTopnews.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
+
     }
 
     companion object {
