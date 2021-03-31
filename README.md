@@ -1,20 +1,23 @@
 # NewsApp
-Simple app to show news and bookmark them to read later
+Simple app to show news and bookmark them to read later.
 
 ## Technologies
-- MVI architecture
+- MVI architecture (Bidirectional)
 - Navigation
 - ViewModel
-- Flow
+- Flow (StateFlow)
 - Room
-- Retrofit
-- Hilt
+- Retrofit & OkHttp
+- Hilt & Dagger
 
 ### TODO
 - Modularized Architecture
 - Adding Detekt
 - Circle CI
 - Bitrize
+- Travis CI
 - Codedev
+- LeakCanary & MemoryLeak practices
+- Timber Logger
 
 
