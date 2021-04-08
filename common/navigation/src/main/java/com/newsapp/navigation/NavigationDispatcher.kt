@@ -3,6 +3,6 @@ package com.newsapp.navigation
 
 interface NavigationDispatcher {
     fun goBack()
-    fun openStoryDetail(storyModel: Any)
-    fun openBookmarkDetail(b:  Any)
+    fun openStoryDetail(url:String,title:String)
+    fun openBookmarkDetail(storyId:Int)
 }

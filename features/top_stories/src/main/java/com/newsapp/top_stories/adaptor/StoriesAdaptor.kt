@@ -11,21 +11,22 @@ import com.newsapp.top_stories.R
 import com.newsapp.top_stories.databinding.ItemStoryBinding
 import com.newsapp.views.common.ImageLoader
 import com.newsapp.views.common.inflate
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import reactivecircus.flowbinding.android.view.clicks
 import javax.inject.Inject
 
 class StoriesAdaptor @Inject constructor(
     private val imageLoader: ImageLoader
-) :
-    ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
+) : ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 
-    var clickListener: kotlinx.coroutines.channels.Channel<TopStoriesAction> =
-        kotlinx.coroutines.channels.Channel { }
+    lateinit var onClickListener: (data: StoryModel) -> Unit
 
     inner class StoryViewHolder(
         private val binding: ItemStoryBinding,
         private val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(model:  StoryModel) {
+        fun bind(model: StoryModel) {
             binding.imgUser.visibility = View.INVISIBLE
             model.image?.let { img ->
                 imageLoader.loadImage(binding.imgUser, img)
@@ -35,14 +36,13 @@ class StoriesAdaptor @Inject constructor(
             binding.tvTitle.text = model.title
 
             binding.imageButton.setOnClickListener {
-                clickListener.offer(
-                     TopStoriesAction.BookmarkStory(
-                        model
-                    )
-                )
+
+                if (::onClickListener.isInitialized)
+                    onClickListener(model)
             }
             binding.root.setOnClickListener {
-                clickListener.offer(TopStoriesAction.ShowDetail(model))
+                if (::onClickListener.isInitialized)
+                    onClickListener(model)
             }
 
         }
@@ -74,4 +74,6 @@ class StoriesAdaptor @Inject constructor(
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) =
         holder.bind(getItem(position))
+
+
 }

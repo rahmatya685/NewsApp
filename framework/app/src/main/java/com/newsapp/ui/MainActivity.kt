@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.newsapp.R
 import com.newsapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,11 +26,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val appBarConfiguration = AppBarConfiguration
+            .Builder(R.id.topStoriesFragment)
+            .build()
         NavigationUI.setupActionBarWithNavController(
             this,
             navController,
-            AppBarConfiguration(navController.graph)
+            appBarConfiguration
         )
     }
 

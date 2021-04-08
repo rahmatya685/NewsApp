@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.newapp.bookmark.R
@@ -20,9 +21,7 @@ import com.newsapp.business.bookmarks.actions.BookmarkedStoriesAction
 import com.newsapp.navigation.NavigationDispatcher
 import com.newsapp.ui_base.MviView
 import com.newsapp.views.common.viewBinding
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
 import javax.inject.Provider
@@ -56,7 +55,8 @@ class BookmarkedStoriesFragment : Fragment(),
         binding.rvBookmarkedStories.adapter = storiesAdaptor
         binding.rvBookmarkedStories.layoutManager = GridLayoutManager(activity, 2)
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
-        viewModel.processAction(intents)
+        intents.onEach(viewModel::processAction)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun observeData(state: BookmarkedStoriesViewState): Unit {
@@ -88,7 +88,7 @@ class BookmarkedStoriesFragment : Fragment(),
 
     private fun showStoryDetail(state: BookmarkedStoriesViewState) {
         state.currentBookmark?.let { b ->
-            navigator.get().openBookmarkDetail(b)
+            navigator.get().openBookmarkDetail(b.id)
         }
 
     }

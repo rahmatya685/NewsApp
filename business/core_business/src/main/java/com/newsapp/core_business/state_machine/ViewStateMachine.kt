@@ -19,7 +19,7 @@ abstract class ViewStateMachine<A : com.newsapp.core_business.actions.ViewAction
     private val intentsChannel: ConflatedBroadcastChannel<A> =
         ConflatedBroadcastChannel(initialAction)
 
-    fun processActions(actions: Flow<A>): Flow<A> = actions.onEach { viewAction ->
+    fun processActions(viewAction: A) {
         intentsChannel.offer(viewAction)
     }
 
@@ -29,7 +29,7 @@ abstract class ViewStateMachine<A : com.newsapp.core_business.actions.ViewAction
         }.scan(initialViewState) { previous, result ->
             mixer.mix(result, previous)
         }.distinctUntilChanged()
-        .onEach { recipeViewState ->
-            viewStateFlow.value = recipeViewState
+        .onEach { viewState ->
+            viewStateFlow.value = viewState
         }
 }

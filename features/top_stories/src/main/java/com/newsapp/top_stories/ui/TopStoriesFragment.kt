@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -21,11 +22,14 @@ import com.newsapp.top_stories.di.injector.inject
 import com.newsapp.top_stories.view_model.TopStoriesViewModel
 import com.newsapp.ui_base.MviView
 import com.newsapp.views.common.viewBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
 import javax.inject.Provider
 
+@ExperimentalCoroutinesApi
 class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     @Inject
@@ -35,7 +39,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: Provider<com.newsapp.navigation.NavigationDispatcher>
+    lateinit var navigator: Provider<NavigationDispatcher>
 
     private val viewModel: TopStoriesViewModel by viewModels { factory }
 
@@ -58,11 +62,22 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTopnews.adapter = storiesAdaptor.apply {
-            viewModel.processAction(merge(refreshAction, this.clickListener.consumeAsFlow()))
-        }
         binding.rvTopnews.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
+
+        val onClickListener = callbackFlow<TopStoriesAction> {
+            storiesAdaptor.onClickListener = { model ->
+                this.offer(TopStoriesAction.ShowDetail(model))
+            }
+            awaitClose()
+        }
+
+        merge(refreshAction, onClickListener)
+            .onEach(viewModel::processAction)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        binding.rvTopnews.adapter = storiesAdaptor
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
     }
 
@@ -80,7 +95,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 hideLoading()
                 renderError(state)
             }
-            state.hasStoryDetailToShow->{
+            state.hasStoryDetailToShow -> {
                 showStoryDetail(state)
             }
             state.hasStories -> {
@@ -96,7 +111,11 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     private fun showStoryDetail(state: TopStoriesViewState) {
-        navigator.get().openStoryDetail(state.showStoryDetail!!)
+        state.showStoryDetail?.let { event ->
+            event.consume { story ->
+                navigator.get().openStoryDetail(story.url, story.title)
+            }
+        }
     }
 
     private fun renderBookmarkedSuccessfully() {
@@ -122,19 +141,16 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     private fun renderLoading() {
-        binding.refresh.isRefreshing = false
+        binding.refresh.isRefreshing = true
     }
 
     private fun showSnack(msg: String) =
-        Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
 
-
-    private val bookmarkAction: Flow<TopStoriesAction>
-        get() = storiesAdaptor.clickListener.consumeAsFlow()
 
     private val refreshAction: Flow<TopStoriesAction>
-        get() = binding.refresh.refreshes().map { TopStoriesAction.LoadStories }
+        get() = binding
+            .refresh.refreshes()
+            .map { TopStoriesAction.LoadStories }
 
-    private val intents: Flow<TopStoriesAction>
-        get() = merge(refreshAction,bookmarkAction)
 }
