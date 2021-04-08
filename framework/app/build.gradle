@@ -106,6 +106,8 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
     implementation project(":business:bookmarks")
     implementation project(":business:top_stories")
     implementation project(":business:core_business")
