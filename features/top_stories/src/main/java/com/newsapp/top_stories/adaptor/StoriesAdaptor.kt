@@ -12,18 +12,19 @@ import com.newsapp.top_stories.databinding.ItemStoryBinding
 import com.newsapp.views.common.ImageLoader
 import com.newsapp.views.common.inflate
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import reactivecircus.flowbinding.android.view.clicks
 import javax.inject.Inject
 
 class StoriesAdaptor @Inject constructor(
-        private val imageLoader: ImageLoader
-) :
-        ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
+    private val imageLoader: ImageLoader
+) : ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 
-    var clickListener: Channel<TopStoriesAction> = Channel { }
+    lateinit var onClickListener: (data: StoryModel) -> Unit
 
     inner class StoryViewHolder(
-            private val binding: ItemStoryBinding,
-            private val imageLoader: ImageLoader
+        private val binding: ItemStoryBinding,
+        private val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(model: StoryModel) {
             binding.imgUser.visibility = View.INVISIBLE
@@ -35,14 +36,13 @@ class StoriesAdaptor @Inject constructor(
             binding.tvTitle.text = model.title
 
             binding.imageButton.setOnClickListener {
-                clickListener.offer(
-                        TopStoriesAction.BookmarkStory(
-                                model
-                        )
-                )
+
+                if (::onClickListener.isInitialized)
+                    onClickListener(model)
             }
             binding.root.setOnClickListener {
-                clickListener.offer(TopStoriesAction.ShowDetail(model))
+                if (::onClickListener.isInitialized)
+                    onClickListener(model)
             }
 
         }
@@ -57,8 +57,8 @@ class StoriesAdaptor @Inject constructor(
                 }
 
                 override fun areContentsTheSame(
-                        oldItem: StoryModel,
-                        newItem: StoryModel
+                    oldItem: StoryModel,
+                    newItem: StoryModel
                 ): Boolean {
                     return oldItem == newItem
                 }
@@ -67,11 +67,13 @@ class StoriesAdaptor @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         return StoryViewHolder(
-                ItemStoryBinding.bind(parent.inflate(R.layout.item_story)),
-                imageLoader
+            ItemStoryBinding.bind(parent.inflate(R.layout.item_story)),
+            imageLoader
         )
     }
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) =
-            holder.bind(getItem(position))
+        holder.bind(getItem(position))
+
+
 }

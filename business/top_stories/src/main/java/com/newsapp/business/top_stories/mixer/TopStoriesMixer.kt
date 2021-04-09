@@ -2,6 +2,7 @@ package com.newsapp.business.top_stories.mixer
 
 import com.newsapp.business.top_stories.result.TopStoriesViewResult
 import com.newsapp.business.top_stories.state.TopStoriesViewState
+import com.newsapp.core_business.event.ViewEvent
 import com.newsapp.core_business.mixer.ResultStateMixer
 import javax.inject.Inject
 
@@ -37,16 +38,11 @@ class TopStoriesMixer @Inject constructor() :
                 stories = oldState.stories,
                 errorMsg = null,
                 loadingMsg = null,
-                bookmarkedStory = result.data,
+                bookmarkedStory = ViewEvent(result.data),
                 showStoryDetail = null
             )
-            is TopStoriesViewResult.ShowDetail -> TopStoriesViewState(
-                stories = oldState.stories,
-                errorMsg = null,
-                loadingMsg = null,
-                bookmarkedStory = null,
-                showStoryDetail = result.data
-            )
+            is TopStoriesViewResult.ShowDetail ->
+                oldState.openStoryDetailState(result.data)
         }
     }
 }

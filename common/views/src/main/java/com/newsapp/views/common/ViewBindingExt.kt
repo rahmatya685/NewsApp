@@ -46,6 +46,10 @@ class ViewBindingDelegate<T : ViewBinding>(
         }
     }
 
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+    }
+
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         val binding: T? = _value

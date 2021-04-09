@@ -21,10 +21,9 @@ class BookmarkedStoriesViewModel @Inject constructor(
         stateMachine.processor.launchIn(viewModelScope)
     }
 
-    fun processAction(actions: Flow<BookmarkedStoriesAction>) {
+    fun processAction(actions: BookmarkedStoriesAction) {
         stateMachine
             .processActions(actions)
-            .launchIn(viewModelScope)
     }
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="par_title_value">pTitle</string>
+    <string name="par_url_value">pUrl</string>
+
+    <string name="story_detail_fragment_id">newsapp://www.topstories/detail?id={id}</string>
+    <string name="story_detail_fragment_link">newsapp://www.topstories/detail?url={pUrl},title={pTitle}</string>
+
+</resources>

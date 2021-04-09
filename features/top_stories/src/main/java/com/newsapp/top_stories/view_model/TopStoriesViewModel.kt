@@ -18,10 +18,8 @@ class TopStoriesViewModel @Inject constructor(
         stateMachine.processor.launchIn(viewModelScope)
     }
 
-    fun processAction(actions: Flow<TopStoriesAction>) {
-        stateMachine
-            .processActions(actions)
-            .launchIn(viewModelScope)
+    fun processAction(actions: TopStoriesAction) {
+        stateMachine.processActions(actions)
     }
 
 }

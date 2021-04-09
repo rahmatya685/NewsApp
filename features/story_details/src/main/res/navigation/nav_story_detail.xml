@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_story_detail"
+    app:startDestination="@id/storyDetail">
+
+    <fragment
+        android:id="@+id/storyDetail"
+        android:name="com.newsapp.story_details.ui.StoryDetailFragment"
+        android:label="storyDetail"
+        tools:layout="@layout/fragment_story_detail">
+        <deepLink app:uri="@string/story_detail_fragment_link" />
+
+        <argument
+            android:name="pUrl"
+            app:argType="string" />
+
+        <argument
+            android:name="pTitle"
+            app:argType="string" />
+
+    </fragment>
+
+</navigation>

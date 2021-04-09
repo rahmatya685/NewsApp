@@ -1,19 +1,13 @@
 package com.newsapp.core_business.state_machine
 
-import com.newsapp.core_business.actions.ViewAction
-import com.newsapp.core_business.mixer.ResultStateMixer
-import com.newsapp.core_business.processor.ActionProcessor
-import com.newsapp.core_business.result.ViewResult
-import com.newsapp.core_business.state.ViewState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 
-abstract class ViewStateMachine<A : ViewAction, S : ViewState, R : ViewResult> constructor(
-        private val actionProcessor: ActionProcessor<A, R>,
-        private val mixer: ResultStateMixer<R, S>,
-        private val initialViewState: S,
-        private val initialAction: A
+abstract class ViewStateMachine<A : com.newsapp.core_business.actions.ViewAction, S : com.newsapp.core_business.state.ViewState, R : com.newsapp.core_business.result.ViewResult> constructor(
+    private val actionProcessor: com.newsapp.core_business.processor.ActionProcessor<A, R>,
+    private val mixer: com.newsapp.core_business.mixer.ResultStateMixer<R, S>,
+    private val initialViewState: S,
+    private val initialAction: A
 ) {
 
     private val viewStateFlow: MutableStateFlow<S> = MutableStateFlow(initialViewState)
@@ -22,11 +16,10 @@ abstract class ViewStateMachine<A : ViewAction, S : ViewState, R : ViewResult> c
         get() = viewStateFlow
 
 
-    @ExperimentalCoroutinesApi
     private val intentsChannel: ConflatedBroadcastChannel<A> =
         ConflatedBroadcastChannel(initialAction)
 
-    fun processActions(actions: Flow<A>): Flow<A> = actions.onEach { viewAction ->
+    fun processActions(viewAction: A) {
         intentsChannel.offer(viewAction)
     }
 
@@ -36,7 +29,7 @@ abstract class ViewStateMachine<A : ViewAction, S : ViewState, R : ViewResult> c
         }.scan(initialViewState) { previous, result ->
             mixer.mix(result, previous)
         }.distinctUntilChanged()
-        .onEach { newViewState ->
-            viewStateFlow.value = newViewState
+        .onEach { viewState ->
+            viewStateFlow.value = viewState
         }
 }
