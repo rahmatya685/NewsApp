@@ -26,21 +26,21 @@ class BookmarkedStoriesAdaptor @Inject constructor(
         private val binding: ItemBookmarkedStoryBinding,
         private val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: Bookmark) {
-            binding.imgUser.visibility = View.INVISIBLE
+        fun bind(model: Bookmark) = with(binding) {
+            imgUser.visibility = View.INVISIBLE
             model.image?.let { img ->
-                imageLoader.loadImage(binding.imgUser, img)
-                binding.imgUser.visibility = View.VISIBLE
+                imageLoader.loadImage(imgUser, img)
+                imgUser.visibility = View.VISIBLE
             }
-            binding.tvDate.text = model.date
-            binding.tvTitle.text = model.title
+            tvDate.text = model.date
+            tvTitle.text = model.title
 
-            binding.imageButton.setOnClickListener {
+            imageButton.setOnClickListener {
                 clickListener.offer(
                     BookmarkedStoriesAction.UnBookmarkStory(model)
                 )
             }
-            binding.root.setOnClickListener {
+            root.setOnClickListener {
                 clickListener.offer(BookmarkedStoriesAction.ShowDetail(model))
             }
 

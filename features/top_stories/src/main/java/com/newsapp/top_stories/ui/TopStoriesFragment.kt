@@ -23,6 +23,7 @@ import com.newsapp.top_stories.view_model.TopStoriesViewModel
 import com.newsapp.ui_base.MviView
 import com.newsapp.views.common.viewBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
@@ -62,9 +63,9 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.rvTopnews.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-
 
         val onClickListener = callbackFlow<TopStoriesAction> {
             storiesAdaptor.onClickListener = { model ->
@@ -114,6 +115,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
         state.showStoryDetail?.let { event ->
             event.consume { story ->
                 navigator.get().openStoryDetail(story.url, story.title)
+                binding.rvTopnews.adapter = null
             }
         }
     }
@@ -152,5 +154,11 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
         get() = binding
             .refresh.refreshes()
             .map { TopStoriesAction.LoadStories }
+
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
 }

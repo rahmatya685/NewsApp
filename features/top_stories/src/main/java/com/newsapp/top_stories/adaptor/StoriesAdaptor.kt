@@ -20,7 +20,7 @@ class StoriesAdaptor @Inject constructor(
     private val imageLoader: ImageLoader
 ) : ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 
-    lateinit var onClickListener: (data: StoryModel) -> Unit
+    var onClickListener: ((StoryModel) -> Unit)? = null
 
     inner class StoryViewHolder(
         private val binding: ItemStoryBinding,
@@ -36,13 +36,10 @@ class StoriesAdaptor @Inject constructor(
             binding.tvTitle.text = model.title
 
             binding.imageButton.setOnClickListener {
-
-                if (::onClickListener.isInitialized)
-                    onClickListener(model)
+                onClickListener?.invoke(model)
             }
             binding.root.setOnClickListener {
-                if (::onClickListener.isInitialized)
-                    onClickListener(model)
+                onClickListener?.invoke(model)
             }
 
         }

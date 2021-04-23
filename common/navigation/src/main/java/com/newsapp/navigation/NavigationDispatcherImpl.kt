@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
@@ -27,7 +28,10 @@ class NavigationDispatcherImpl @Inject constructor(
         val path = context.getString(R.string.story_detail_fragment_link)
             .replace(pUrlValue, url)
             .replace(pTitleValue, title)
-        navController.navigate(path.toUri())
+        val navoptions =NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .build()
+        navController.navigate(path.toUri(),navoptions)
     }
 
     override fun openBookmarkDetail(storyId: Int) {
