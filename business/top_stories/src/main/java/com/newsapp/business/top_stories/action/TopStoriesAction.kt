@@ -9,6 +9,4 @@ sealed class TopStoriesAction : ViewAction {
         TopStoriesAction()
 
     data class ShowDetail(val storyModel: StoryModel) : TopStoriesAction()
-
-
 }
