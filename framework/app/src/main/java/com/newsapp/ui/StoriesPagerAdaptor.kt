@@ -12,7 +12,7 @@ const val TOP_STORIES_FRG="Top Stories"
 const val BOOKMARK_FRG ="Bookmark"
 
 class StoriesPagerAdaptor(fragmentManager: FragmentManager) :
-    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragments = arrayOf(TOP_STORIES_FRG , BOOKMARK_FRG)
 

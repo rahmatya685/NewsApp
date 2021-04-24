@@ -9,6 +9,7 @@ Simple app to show news and bookmark them to read later.
 - Room
 - Retrofit & OkHttp
 - Hilt & Dagger
+- LeakCanary
 
 ### TODO
 - Modularized Architecture
@@ -17,7 +18,6 @@ Simple app to show news and bookmark them to read later.
 - Bitrize
 - Travis CI
 - Codedev
-- LeakCanary & MemoryLeak practices
 - Timber Logger
 
 

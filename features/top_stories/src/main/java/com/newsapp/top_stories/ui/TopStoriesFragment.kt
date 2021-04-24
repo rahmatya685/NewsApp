@@ -23,7 +23,6 @@ import com.newsapp.top_stories.view_model.TopStoriesViewModel
 import com.newsapp.ui_base.MviView
 import com.newsapp.views.common.viewBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
@@ -52,12 +51,12 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_top_stories,
-            container, false
+                R.layout.fragment_top_stories,
+                container, false
         )
     }
 
@@ -65,18 +64,21 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvTopnews.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         val onClickListener = callbackFlow<TopStoriesAction> {
             storiesAdaptor.onClickListener = { model ->
                 this.offer(TopStoriesAction.ShowDetail(model))
             }
             awaitClose()
-        }
+        }.onEach(viewModel::processAction)
+                .launchIn(viewLifecycleOwner.lifecycleScope)
 
-        merge(refreshAction, onClickListener)
-            .onEach(viewModel::processAction)
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        binding.refresh.refreshes()
+                .map { TopStoriesAction.LoadStories }
+                .onEach(viewModel::processAction)
+                .launchIn(viewLifecycleOwner.lifecycleScope)
+
 
         binding.rvTopnews.adapter = storiesAdaptor
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
@@ -85,7 +87,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     companion object {
         @JvmStatic
         fun newInstance() =
-            TopStoriesFragment()
+                TopStoriesFragment()
     }
 
 
@@ -115,7 +117,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
         state.showStoryDetail?.let { event ->
             event.consume { story ->
                 navigator.get().openStoryDetail(story.url, story.title)
-                binding.rvTopnews.adapter = null
+
             }
         }
     }
@@ -147,18 +149,19 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
     }
 
     private fun showSnack(msg: String) =
-        Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
 
 
-    private val refreshAction: Flow<TopStoriesAction>
-        get() = binding
-            .refresh.refreshes()
-            .map { TopStoriesAction.LoadStories }
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        /**
+         * Since we know that navigation component will replace the pager fragment
+         * (and it's child as this fragment is a child) so we are sure that onDestroy will be called
+         * after onStop, So we keep the rendered views inside the adaptor and
+         * set the rvTopNews.adaptor to null to prevent leaking since the binding will be set to null
+         * on the onDestroy
+         */
+        binding.rvTopnews.adapter = null
+        super.onStop()
     }
 
 }

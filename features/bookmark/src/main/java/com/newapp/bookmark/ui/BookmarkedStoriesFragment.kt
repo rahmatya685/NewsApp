@@ -28,7 +28,7 @@ import javax.inject.Provider
 
 
 class BookmarkedStoriesFragment : Fragment(),
-    MviView<BookmarkedStoriesViewState> {
+        MviView<BookmarkedStoriesViewState> {
 
     @Inject
     lateinit var storiesAdaptor: BookmarkedStoriesAdaptor
@@ -42,7 +42,7 @@ class BookmarkedStoriesFragment : Fragment(),
     private val viewModel: BookmarkedStoriesViewModel by viewModels { factory }
 
     private val binding: FragmentBookmarkedStoriesBinding by viewBinding(
-        FragmentBookmarkedStoriesBinding::bind
+            FragmentBookmarkedStoriesBinding::bind
     )
 
     override fun onAttach(context: Context) {
@@ -52,11 +52,18 @@ class BookmarkedStoriesFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvBookmarkedStories.adapter = storiesAdaptor
-        binding.rvBookmarkedStories.layoutManager = GridLayoutManager(activity, 2)
-        viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
-        intents.onEach(viewModel::processAction)
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        binding.apply {
+            rvBookmarkedStories.adapter = storiesAdaptor
+            rvBookmarkedStories.layoutManager = GridLayoutManager(activity, 2)
+            viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
+
+            refresh.refreshes()
+                    .map { BookmarkedStoriesAction.LoadStories }
+                    .onEach(viewModel::processAction)
+                    .launchIn(viewLifecycleOwner.lifecycleScope)
+        }
+
     }
 
     override fun observeData(state: BookmarkedStoriesViewState): Unit {
@@ -108,29 +115,29 @@ class BookmarkedStoriesFragment : Fragment(),
     }
 
     private fun showSnack(msg: String) =
-        Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_bookmarked_stories,
-            container, false
+                R.layout.fragment_bookmarked_stories,
+                container, false
         )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.rvBookmarkedStories.adapter = null
     }
 
     companion object {
         @JvmStatic
         fun newInstance() =
-            BookmarkedStoriesFragment()
+                BookmarkedStoriesFragment()
     }
 
-    private val refreshAction: Flow<BookmarkedStoriesAction>
-        get() = binding.refresh.refreshes().map { BookmarkedStoriesAction.LoadStories }
-
-    private val intents: Flow<BookmarkedStoriesAction>
-        get() = merge(refreshAction)
 }
 
 
