@@ -20,7 +20,7 @@ class StoriesAdaptor @Inject constructor(
     private val imageLoader: ImageLoader
 ) : ListAdapter<StoryModel, StoriesAdaptor.StoryViewHolder>(diffUtilCallback) {
 
-    var onClickListener: ((StoryModel) -> Unit)? = null
+    var onClickListener: ((TopStoriesAction) -> Unit)? = null
 
     inner class StoryViewHolder(
         private val binding: ItemStoryBinding,
@@ -36,10 +36,10 @@ class StoriesAdaptor @Inject constructor(
             binding.tvTitle.text = model.title
 
             binding.imageButton.setOnClickListener {
-                onClickListener?.invoke(model)
+                onClickListener?.invoke(TopStoriesAction.BookmarkStory(model))
             }
             binding.root.setOnClickListener {
-                onClickListener?.invoke(model)
+                onClickListener?.invoke(TopStoriesAction.ShowDetail(model))
             }
 
         }

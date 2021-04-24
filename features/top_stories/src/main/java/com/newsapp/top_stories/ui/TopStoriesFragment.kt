@@ -65,10 +65,11 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
 
         binding.rvTopnews.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.rvTopnews.adapter = storiesAdaptor
 
-        val onClickListener = callbackFlow<TopStoriesAction> {
-            storiesAdaptor.onClickListener = { model ->
-                this.offer(TopStoriesAction.ShowDetail(model))
+        callbackFlow {
+            storiesAdaptor.onClickListener = { action ->
+                this.offer(action)
             }
             awaitClose()
         }.onEach(viewModel::processAction)
@@ -80,7 +81,7 @@ class TopStoriesFragment : Fragment(), MviView<TopStoriesViewState> {
                 .launchIn(viewLifecycleOwner.lifecycleScope)
 
 
-        binding.rvTopnews.adapter = storiesAdaptor
+
         viewModel.viewState.observe(viewLifecycleOwner, ::observeData)
     }
 
