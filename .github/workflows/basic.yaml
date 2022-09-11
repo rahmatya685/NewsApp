@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate AAR and APK files
         if: always()
-        run: chmod +x gradlew ./gradlew assembleDebug
+        run: ./gradlew assembleDebug
 
       - name: Upload AAR files
         if: always()
