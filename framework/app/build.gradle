@@ -9,8 +9,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 33
+    buildToolsVersion "30.0.3"
     packagingOptions {
         exclude 'META-INF/top_stories_debug.kotlin_module'
         exclude 'META-INF/LICENSE'
@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "com.newsapp"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -47,8 +47,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_10
+        targetCompatibility JavaVersion.VERSION_1_10
     }
     kotlinOptions {
         jvmTarget = '1.8'
