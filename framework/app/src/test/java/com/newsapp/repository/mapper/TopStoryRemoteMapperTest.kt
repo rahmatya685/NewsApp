@@ -10,7 +10,7 @@ class TopStoryRemoteMapperTest : TestCase() {
 
     @Test
     fun testMapFromModel() {
-        val dto = Gson().fromJson(DummyData.topStoriesDto, com.newsapp.remo_impl.dto.TopStoriesDto::class.java)
+        val dto = Gson().fromJson(DummyData.topStoriesDto, TopStoriesDto::class.java)
         val model = com.newsapp.remo_impl.mapper.TopStoryRemoteMapper().mapFrom(dto)
         assertTrue(model.size == 3)
         assertTrue(model.first().title == "Trump Targets Michigan in His Ploy to Subvert the Election")
