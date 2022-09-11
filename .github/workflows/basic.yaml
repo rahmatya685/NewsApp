@@ -1,9 +1,9 @@
 name: task - validate commit on master
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ master ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ master ]
 
 jobs:
   basic_job:
@@ -24,6 +24,12 @@ jobs:
           cache: gradle
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+      - name: Check lint
+        if: always()
+        run: ./gradlew lint
+      - name: Run Unit Tests
+        if: always()
+        run: ./gradlew testDebugUnitTest
       - name: Generate AAR and APK files
         if: always()
         run: ./gradlew assembleDebug
