@@ -1,7 +1,9 @@
 name: task - validate commit on master
 on:
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
   basic_job:
@@ -20,7 +22,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
-
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: Generate AAR and APK files
         if: always()
         run: ./gradlew assembleDebug
